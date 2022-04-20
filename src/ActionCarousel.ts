@@ -1,7 +1,7 @@
 import CarouselAction from "./CarouselAction";
 import {PaintedNode} from 'parsegraph-artist';
 import { Keystroke } from "parsegraph-input";
-import { BlockPalette, DefaultBlockPalette } from 'parsegraph-block';
+import { BlockNode, BlockPalette, DefaultBlockPalette } from 'parsegraph-block';
 
 export default class ActionCarousel {
   _palette: BlockPalette;
@@ -40,13 +40,13 @@ export default class ActionCarousel {
         label = hotkeyInfo.action;
         hotkey = hotkey || hotkeyInfo.hotkey;
       }
-      action.setLabel(label, defaultFont());
+      (action as BlockNode).value().setLabel(label);
     }
     if (!listenerThisArg) {
       listenerThisArg = this;
     }
     const obj = new CarouselAction(
-      action as WindowNode,
+      action as PaintedNode,
       listener,
       listenerThisArg
     );
@@ -56,12 +56,12 @@ export default class ActionCarousel {
     this._actions.push(obj);
   }
 
-  install(node: Node<DefaultNodeType>, nodeData?: any) {
+  install(node: PaintedNode, nodeData?: any) {
     node
       .value()
       .interact()
-      .setClickListener((viewport: Viewport) => {
-        return this.onClick(viewport, node, nodeData);
+      .setClickListener(() => {
+        return this.onClick(node, nodeData);
       }, this);
     node
       .value()
@@ -145,7 +145,7 @@ export default class ActionCarousel {
     carousel.scheduleCarouselRepaint();
   }
 
-  onClick(viewport: Viewport, node: WindowNode, nodeData?: any) {
+  onClick(node: WindowNode, nodeData?: any) {
     const carousel = viewport.carousel();
     this.loadCarousel(viewport, node, nodeData);
     carousel.showCarousel();

@@ -3,10 +3,9 @@ import {
   matrixMultiply3x3,
   makeScale3x3,
   makeTranslation3x3,
-  Matrix3x3,
 } from "parsegraph-matrix";
 import Color from "parsegraph-color";
-import Projector, { Projected } from 'parsegraph-projector';
+import { Projector, Projected } from 'parsegraph-projector';
 import CarouselAction from "./CarouselAction";
 import Camera from "parsegraph-camera";
 import { PaintedNode} from 'parsegraph-artist';
@@ -14,19 +13,20 @@ import { PaintedNode} from 'parsegraph-artist';
 import { Keystroke } from "parsegraph-input";
 import { WorldTransform } from 'parsegraph-scene';
 import Method from 'parsegraph-method';
+import GraphPainter from "parsegraph-graphpainter";
 
 class CarouselPlot {
   node: PaintedNode;
   x: number;
   y: number;
   scale: number;
+  painter: GraphPainter;
 
   constructor(node: PaintedNode) {
     this.node = node;
+    this.painter = new GraphPainter(node);
   }
 }
-
-import { Projected } from "parsegraph-projector";
 
 export const CAROUSEL_SHOW_DURATION = 100;
 
@@ -46,14 +46,16 @@ export default class Carousel implements Projected {
   _selectedCarouselPlot: CarouselPlot;
   _selectedCarouselPlotIndex: number;
   _carouselHotkeys: { [id: string]: number };
-  _fanPainter: FanPainter;
+  _fanPainters: Map<Projector, FanPainter>;
   _selectedPlot: PaintedNode;
   _hideTime: Date;
   _cleaner: Function;
   _showTime: Date;
   _update: Method;
+  _camera: Camera;
 
-  constructor() {
+  constructor(cam: Camera) {
+    this._camera = cam;
     this._updateRepeatedly = false;
     this._showScale = 1;
 
@@ -76,19 +78,15 @@ export default class Carousel implements Projected {
     this._selectedCarouselPlotIndex = null;
 
     // GL painters are not created until needed.
-    this._fanPainter = null;
+    this._fanPainters = new Map();
 
     this._selectedPlot = null;
 
     this._update = new Method();
   }
 
-  setOnScheduleUpdate(func: Function, obj?: object) {
-    this._update.set(func, obj);
-  }
-
   camera() {
-    return this._viewport.camera();
+    return this._camera;
   }
 
   needsRepaint() {
@@ -115,13 +113,17 @@ export default class Carousel implements Projected {
     return this._showCarousel;
   }
 
+  scheduleUpdate() {
+    this._update.call();
+  }
+
   hideCarousel() {
     // console.log(new Error("Hiding carousel"));
     this._selectedCarouselPlot = null;
     this._selectedCarouselPlotIndex = null;
     this._showCarousel = false;
     this._hideTime = new Date();
-    this._viewport.scheduleRepaint();
+    this.scheduleUpdate();
   }
 
   addToCarousel(action: CarouselAction) {
@@ -132,7 +134,7 @@ export default class Carousel implements Projected {
       throw new Error("Node must not be null");
     }
     if (!node.localPaintGroup()) {
-      node.setPaintGroup(true);
+      node.crease();
     }
     this._carouselPlots.push(new CarouselPlot(node));
     if (action.hotkey()) {
@@ -286,7 +288,7 @@ export default class Carousel implements Projected {
     return true;
   }
 
-  mouseOverCarousel(x: number, y: number) {
+  mouseOverCarousel(proj: Projector, x: number, y: number) {
     if (!this.isCarouselShown()) {
       return 0;
     }
@@ -321,18 +323,20 @@ export default class Carousel implements Projected {
           this._selectedCarouselPlotIndex = i;
           this._selectedCarouselPlot = this._carouselPlots[i];
         }
-        if (this._fanPainter) {
+        const painter = this._fanPainters.get(proj);
+        if (painter) {
           // console.log("Setting selection angle", selectionAngle, angleSpan);
-          this._fanPainter.setSelectionAngle(selectionAngle);
-          this._fanPainter.setSelectionSize(angleSpan);
+          painter.setSelectionAngle(selectionAngle);
+          painter.setSelectionSize(angleSpan);
         }
         this.scheduleCarouselRepaint();
         return 2;
       }
     }
-    if (this._fanPainter) {
-      this._fanPainter.setSelectionAngle(null);
-      this._fanPainter.setSelectionSize(null);
+    const painter = this._fanPainters.get(proj);
+    if (painter) {
+      painter.setSelectionAngle(null);
+      painter.setSelectionSize(null);
       this._selectedCarouselPlot = null;
       this._selectedCarouselPlotIndex = null;
       this.scheduleCarouselRepaint();
@@ -377,7 +381,8 @@ export default class Carousel implements Projected {
     let minScale = 1;
     this._carouselPlots.forEach(function (carouselData, i) {
       const root = carouselData.node;
-      root.commitLayoutIteratively();
+      const rootLayout = root.value().getLayout();
+      rootLayout.commitLayoutIteratively();
 
       // Set the origin.
       const caretRad =
@@ -390,7 +395,7 @@ export default class Carousel implements Projected {
         2 * this._carouselSize * this._showScale * Math.sin(caretRad);
 
       // Set the scale.
-      const commandSize = root.extentSize();
+      const commandSize = rootLayout.extentSize();
       const xMax = MAX_CAROUSEL_SIZE;
       const yMax = MAX_CAROUSEL_SIZE;
       let xShrinkFactor = 1;
@@ -448,23 +453,25 @@ export default class Carousel implements Projected {
     // console.log("Painting the carousel");
     this.arrangeCarousel();
     this._carouselPlots.forEach((carouselData) => {
-      carouselData.node.paint(proj, timeout);
+      carouselData.painter.paint(proj, timeout);
     });
 
     // Paint the background highlighting fan.
-    if (!this._fanPainter) {
-      this._fanPainter = new FanPainter(proj);
+    let painter = this._fanPainters.get(proj);
+    if (!painter) {
+      painter = new FanPainter(proj.glProvider());
+      this._fanPainters.set(proj, painter);
     } else {
-      this._fanPainter.clear();
+      painter.clear();
     }
     const fanPadding = 1.2;
-    this._fanPainter.setAscendingRadius(
+    painter.setAscendingRadius(
       this.showScale() * fanPadding * this._carouselSize
     );
-    this._fanPainter.setDescendingRadius(
+    painter.setDescendingRadius(
       this.showScale() * fanPadding * 2 * this._carouselSize
     );
-    this._fanPainter.selectRad(0, 0, 0, Math.PI * 2, new Color(1, 1, 1, 1));
+    painter.selectRad(0, 0, 0, Math.PI * 2, new Color(1, 1, 1, 1));
 
     this._carouselPaintingDirty = false;
     return this._updateRepeatedly;
@@ -478,14 +485,14 @@ export default class Carousel implements Projected {
   }
 
 
-  render(proj: Projector) {
-    let world = this._world.world();
+  render(proj: Projector):boolean {
+    let world = this._world.matrix();
     // console.log("Rendering carousel", this._showCarousel);
     if (!this._showCarousel) {
-      return;
+      return false;
     }
     if (this._updateRepeatedly || this._carouselPaintingDirty) {
-      this.paint();
+      this.paint(proj);
     }
 
     world = matrixMultiply3x3(
@@ -499,7 +506,7 @@ export default class Carousel implements Projected {
     const camera = this.camera();
     proj.overlay().resetTransform();
     proj.overlay().scale(camera.scale(), camera.scale());
-    proj 
+    proj
       .overlay()
       .translate(
         camera.x() + this._carouselCoords[0],
@@ -517,18 +524,20 @@ export default class Carousel implements Projected {
         .translate(this.camera().x() + this._carouselCoords[0],
             this.camera().y() + this._carouselCoords[1]);*/
 
-    this._fanPainter.render(proj);
+    const painter = this.getPainter(proj);
+    if (!painter) {
+      return true;
+    }
+    painter.render(world);
 
     // Render the carousel if requested.
     // console.log("Rendering ", this._carouselPlots.length, " carousel plots");
     this._carouselPlots.forEach((carouselData) => {
-      const root = carouselData.node;
       proj.overlay().save();
       proj.overlay().translate(carouselData.x, carouselData.y);
       proj.overlay().scale(carouselData.scale, carouselData.scale);
-      root.renderOffscreen(
-        proj,
-        // scale * trans * world
+
+      const wt = new WorldTransform(
         matrixMultiply3x3(
           makeScale3x3(carouselData.scale),
           matrixMultiply3x3(
@@ -537,11 +546,41 @@ export default class Carousel implements Projected {
           )
         ),
         1.0,
-        false,
-        new Camera(),
-        null
+        proj.width(),
+        proj.height(),
+        carouselData.x,
+        carouselData.y
       );
+      carouselData.painter.setWorldTransform(wt);
+      carouselData.painter.render(proj);
       proj.overlay().restore();
     });
+
+    return false;
+  }
+
+  tick() {
+    return false;
+  }
+
+  getPainter(proj: Projector) {
+    return this._fanPainters.get(proj);
+  }
+
+  unmount(proj: Projector) {
+    const painter = this.getPainter(proj);
+    if (painter) {
+      painter.clear();
+      this._fanPainters.delete(proj);
+    }
+  }
+
+  dispose() {
+    this._fanPainters.forEach(painter=>painter.clear());
+    this._fanPainters.clear();
+  }
+
+  setOnScheduleUpdate(func: Function, obj?: object) {
+    this._update.set(func, obj);
   }
 }
