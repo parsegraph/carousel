@@ -53,10 +53,16 @@
     "webgl-debug": "^2.0.1"
   },
   "dependencies": {
+    "parsegraph-artist": "^3.4.1",
+    "parsegraph-block": "^4.3.2",
     "parsegraph-camera": "^1.4.11",
     "parsegraph-color": "^1.4.7",
+    "parsegraph-fanpainter": "^1.6.8",
+    "parsegraph-input": "^1.6.5",
     "parsegraph-matrix": "^1.4.11",
     "parsegraph-method": "^1.4.22",
+    "parsegraph-projector": "^1.13.0",
+    "parsegraph-scene": "^2.2.1",
     "parsegraph-toradians": "^1.4.9",
     "parsegraph-window": "^1.8.17"
   }
