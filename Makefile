@@ -2,6 +2,7 @@ DIST_NAME = carousel
 
 SCRIPT_FILES = \
 	src/index.ts \
+	src/settings.ts \
 	src/ActionCarousel.ts \
 	src/Carousel.ts \
 	src/CarouselAction.ts \
