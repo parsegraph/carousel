@@ -58,6 +58,7 @@
     "parsegraph-camera": "^1.4.11",
     "parsegraph-color": "^1.4.7",
     "parsegraph-fanpainter": "^1.6.8",
+    "parsegraph-graphpainter": "^2.4.0",
     "parsegraph-input": "^1.6.5",
     "parsegraph-matrix": "^1.4.11",
     "parsegraph-method": "^1.4.22",
