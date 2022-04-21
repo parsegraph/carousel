@@ -4,6 +4,7 @@ SCRIPT_FILES = \
 	src/index.ts \
 	src/settings.ts \
 	src/ActionCarousel.ts \
+	src/graphDemo.ts \
 	src/Carousel.ts \
 	src/CarouselAction.ts \
 	src/demo.ts \
