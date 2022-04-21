@@ -9,9 +9,7 @@ import { Projector, Projected } from "parsegraph-projector";
 import CarouselAction from "./CarouselAction";
 import Camera from "parsegraph-camera";
 import { PaintedNode } from "parsegraph-artist";
-// import { toDegrees } from "parsegraph-toradians";
 import { Keystroke } from "parsegraph-input";
-import { WorldTransform } from "parsegraph-scene";
 import Method from "parsegraph-method";
 import { GraphPainter } from "parsegraph-graphpainter";
 
