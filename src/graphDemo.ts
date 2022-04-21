@@ -8,6 +8,8 @@ import {Projector, Projected} from 'parsegraph-projector';
 import Method from 'parsegraph-method';
 import {makeInverse3x3, matrixTransform2D} from "parsegraph-matrix";
 import Color from 'parsegraph-color';
+import {GraphPainter} from "parsegraph-graphpainter";
+import ActionCarousel from "./ActionCarousel";
 
 const BACKGROUND_COLOR = new Color(
   0, 47/255, 57/255, 1
@@ -86,27 +88,32 @@ document.addEventListener("DOMContentLoaded", () => {
   const bg = new BG(cam);
 
   const palette = new DefaultBlockPalette();
+
+  const ac = new ActionCarousel(carousel);
   [
     "Cut",
     "Copy",
     "Paste",
     "Delete",
   ].forEach(cmd=>{
-    const n = palette.spawn();
-    n.value().setLabel(cmd);
-    const act = new CarouselAction(
-      n,
+    ac.addAction(cmd,
       ()=>{
         bg.addText(cmd);
       },
     );
-    carousel.addToCarousel(act);
   });
 
   const belt = new TimingBelt();
 
   const proj = new BasicProjector();
   belt.addRenderable(new Projection(proj, bg));
+
+  const rootBlock = palette.spawn('b');
+  rootBlock.value().setLabel("Hello!");
+  ac.install(rootBlock);
+  const graphPainter = new GraphPainter(rootBlock, cam);
+  belt.addRenderable(new Projection(proj, bg));
+  belt.addRenderable(new Projection(proj, graphPainter));
   belt.addRenderable(new Projection(proj, carousel));
 
   proj.container().addEventListener("mousemove", e=>{
@@ -140,3 +147,4 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   root.appendChild(proj.container());
 });
+

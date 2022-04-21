@@ -1,15 +1,18 @@
 import CarouselAction from "./CarouselAction";
-import {PaintedNode} from 'parsegraph-artist';
+import { PaintedNode } from "parsegraph-artist";
 import { Keystroke } from "parsegraph-input";
-import { BlockNode, BlockPalette, DefaultBlockPalette } from 'parsegraph-block';
+import { BlockNode, BlockPalette, DefaultBlockPalette } from "parsegraph-block";
+import Carousel from "./Carousel";
 
 export default class ActionCarousel {
   _palette: BlockPalette;
   _actions: CarouselAction[];
   _uninstaller: Function;
+  _carousel: Carousel;
 
-  constructor(palette: BlockPalette = new DefaultBlockPalette()) {
+  constructor(carousel: Carousel, palette: BlockPalette = new DefaultBlockPalette()) {
     this._palette = palette;
+    this._carousel = carousel;
     this._actions = [];
   }
 
@@ -66,31 +69,17 @@ export default class ActionCarousel {
     node
       .value()
       .interact()
-      .setKeyListener((event: Keystroke, viewport?: Viewport) => {
+      .setKeyListener((event: Keystroke) => {
         return (
-          viewport.carousel().isCarouselShown() && this.onKey(event, viewport)
+          this.carousel().isCarouselShown() && this.onKey(event)
         );
       }, this);
 
     let uninstaller: Function = null;
 
-    const eventListener = node
-      .events()
-      .listen((eventName: string, viewport: Viewport) => {
-        if (eventName === "carousel-load") {
-          this.loadCarousel(viewport, node, nodeData);
-        } else if (eventName === "carousel-stop") {
-          if (uninstaller) {
-            uninstaller();
-            uninstaller = null;
-          }
-        }
-      });
-
     uninstaller = () => {
       node.value().interact().setClickListener(null);
       node.value().interact().setKeyListener(null);
-      node.events().stopListening(eventListener);
     };
     this._uninstaller = () => {
       if (!uninstaller) {
@@ -102,6 +91,10 @@ export default class ActionCarousel {
     return this._uninstaller;
   }
 
+  carousel() {
+    return this._carousel;
+  }
+
   uninstall() {
     if (!this._uninstaller) {
       return;
@@ -110,8 +103,8 @@ export default class ActionCarousel {
     this._uninstaller = null;
   }
 
-  onKey(_: Keystroke, viewport: Viewport): boolean {
-    const carousel = viewport.carousel();
+  onKey(_: Keystroke): boolean {
+    const carousel = this.carousel();
     if (carousel.isCarouselShown()) {
       carousel.hideCarousel();
       return true;
@@ -120,9 +113,8 @@ export default class ActionCarousel {
     }
   }
 
-  loadCarousel(viewport: Viewport, node: WindowNode, nodeData?: any) {
-    console.log("Loading carousel");
-    const carousel = viewport.carousel();
+  loadCarousel(node: PaintedNode, nodeData?: any) {
+    const carousel = this.carousel();
     if (carousel.isCarouselShown()) {
       carousel.clearCarousel();
       carousel.hideCarousel();
@@ -141,14 +133,12 @@ export default class ActionCarousel {
       action.setNodeData(node, nodeData);
       carousel.addToCarousel(action);
     }
-    console.log("Scheduling carousel repaint");
     carousel.scheduleCarouselRepaint();
   }
 
-  onClick(node: WindowNode, nodeData?: any) {
-    const carousel = viewport.carousel();
-    this.loadCarousel(viewport, node, nodeData);
-    carousel.showCarousel();
-    carousel.scheduleCarouselRepaint();
+  onClick(node: PaintedNode, nodeData?: any) {
+    this.loadCarousel(node, nodeData);
+    this.carousel().showCarousel();
+    this.carousel().scheduleCarouselRepaint();
   }
 }
