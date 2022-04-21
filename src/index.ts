@@ -1,3 +1,12 @@
-export default function todo() {
-  return "Hello from TODO-PACKAGE-NAME";
+import ActionCarousel from "./ActionCarousel";
+import Carousel, {CAROUSEL_SHOW_DURATION, CAROUSEL_MIN_DISTANCE, CAROUSEL_MAX_DISTANCE} from "./Carousel";
+import CarouselAction from "./CarouselAction";
+
+export default Carousel;
+export {
+  ActionCarousel,
+  CAROUSEL_SHOW_DURATION,
+  CAROUSEL_MIN_DISTANCE,
+  CAROUSEL_MAX_DISTANCE,
+  CarouselAction
 }
