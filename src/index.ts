@@ -1,5 +1,9 @@
 import ActionCarousel from "./ActionCarousel";
-import Carousel, {CAROUSEL_SHOW_DURATION, CAROUSEL_MIN_DISTANCE, CAROUSEL_MAX_DISTANCE} from "./Carousel";
+import Carousel, {
+  CAROUSEL_SHOW_DURATION,
+  CAROUSEL_MIN_DISTANCE,
+  CAROUSEL_MAX_DISTANCE,
+} from "./Carousel";
 import CarouselAction from "./CarouselAction";
 
 export default Carousel;
@@ -8,5 +12,5 @@ export {
   CAROUSEL_SHOW_DURATION,
   CAROUSEL_MIN_DISTANCE,
   CAROUSEL_MAX_DISTANCE,
-  CarouselAction
-}
+  CarouselAction,
+};

@@ -89,7 +89,6 @@ class BG implements Projected {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-
   const palette = new DefaultBlockPalette();
 
   const belt = new TimingBelt();

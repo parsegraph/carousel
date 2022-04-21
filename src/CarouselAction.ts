@@ -24,7 +24,7 @@ export default class CarouselAction {
     this._action = action;
   }
 
-  action():PaintedNode {
+  action(): PaintedNode {
     return this._action;
   }
 
@@ -41,7 +41,7 @@ export default class CarouselAction {
     return this._nodeData;
   }
 
-  node():PaintedNode {
+  node(): PaintedNode {
     return this._node;
   }
 
