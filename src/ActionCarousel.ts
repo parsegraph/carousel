@@ -10,7 +10,10 @@ export default class ActionCarousel {
   _uninstaller: Function;
   _carousel: Carousel;
 
-  constructor(carousel: Carousel, palette: BlockPalette = new DefaultBlockPalette()) {
+  constructor(
+    carousel: Carousel,
+    palette: BlockPalette = new DefaultBlockPalette()
+  ) {
     this._palette = palette;
     this._carousel = carousel;
     this._actions = [];
@@ -70,9 +73,7 @@ export default class ActionCarousel {
       .value()
       .interact()
       .setKeyListener((event: Keystroke) => {
-        return (
-          this.carousel().isCarouselShown() && this.onKey(event)
-        );
+        return this.carousel().isCarouselShown() && this.onKey(event);
       }, this);
 
     let uninstaller: Function = null;

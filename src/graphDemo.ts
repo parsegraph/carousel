@@ -1,21 +1,23 @@
 import Carousel from "./Carousel";
-import Camera from 'parsegraph-camera';
-import TimingBelt from 'parsegraph-timingbelt';
-import {BasicProjector, Projection} from "parsegraph-projector";
+import Camera from "parsegraph-camera";
+import TimingBelt from "parsegraph-timingbelt";
+import { BasicProjector, Projection } from "parsegraph-projector";
 import CarouselAction from "./CarouselAction";
-import {DefaultBlockPalette} from "parsegraph-block";
-import {Projector, Projected} from 'parsegraph-projector';
-import Method from 'parsegraph-method';
-import {makeInverse3x3, matrixTransform2D} from "parsegraph-matrix";
-import Color from 'parsegraph-color';
-import {GraphPainter} from "parsegraph-graphpainter";
+import { DefaultBlockPalette } from "parsegraph-block";
+import { Projector, Projected } from "parsegraph-projector";
+import Method from "parsegraph-method";
+import { makeInverse3x3, matrixTransform2D } from "parsegraph-matrix";
+import Color from "parsegraph-color";
+import { GraphPainter } from "parsegraph-graphpainter";
 import ActionCarousel from "./ActionCarousel";
 
 const BACKGROUND_COLOR = new Color(
-  0, 47/255, 57/255, 1
-  //45/255, 84/255, 127/255, 1
+  0,
+  47 / 255,
+  57 / 255,
+  1
+  // 45/255, 84/255, 127/255, 1
 );
-
 
 class BG implements Projected {
   _update: Method;
@@ -57,29 +59,32 @@ class BG implements Projected {
     cam.setScale(2.0);
     cam.setSize(proj.width(), proj.height());
     cam.setOrigin(0, 0);
-    cam.zoomToPoint(1.0, proj.width()/2, proj.height()/2);
+    cam.zoomToPoint(1.0, proj.width() / 2, proj.height() / 2);
     proj.overlay().resetTransform();
     proj.overlay().clearRect(0, 0, proj.width(), proj.height());
     const gl = proj.glProvider().gl();
     gl.viewport(0, 0, proj.width(), proj.height());
-    gl.clearColor(BACKGROUND_COLOR.r(), BACKGROUND_COLOR.g(), BACKGROUND_COLOR.b(), 1);
+    gl.clearColor(
+      BACKGROUND_COLOR.r(),
+      BACKGROUND_COLOR.g(),
+      BACKGROUND_COLOR.b(),
+      1
+    );
     gl.clear(gl.COLOR_BUFFER_BIT);
     proj.overlay().fillStyle = "white";
     proj.overlay().font = "36px sans";
     proj.overlay().textBaseline = "top";
     proj.overlay().fillText(this._text, 0, 0);
     proj.overlay().textBaseline = "bottom";
-    proj.overlay().fillText(`${proj.width()}x${proj.height()}`, 0, proj.height());
+    proj
+      .overlay()
+      .fillText(`${proj.width()}x${proj.height()}`, 0, proj.height());
     return false;
   }
 
-  dispose() {
+  dispose() {}
 
-  }
-
-  unmount() {
-
-  }
+  unmount() {}
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -90,17 +95,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const palette = new DefaultBlockPalette();
 
   const ac = new ActionCarousel(carousel);
-  [
-    "Cut",
-    "Copy",
-    "Paste",
-    "Delete",
-  ].forEach(cmd=>{
-    ac.addAction(cmd,
-      ()=>{
-        bg.addText(cmd);
-      },
-    );
+  ["Cut", "Copy", "Paste", "Delete"].forEach((cmd) => {
+    ac.addAction(cmd, () => {
+      bg.addText(cmd);
+    });
   });
 
   const belt = new TimingBelt();
@@ -108,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const proj = new BasicProjector();
   belt.addRenderable(new Projection(proj, bg));
 
-  const rootBlock = palette.spawn('b');
+  const rootBlock = palette.spawn("b");
   rootBlock.value().setLabel("Hello!");
   ac.install(rootBlock);
   const graphPainter = new GraphPainter(rootBlock, cam);
@@ -116,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
   belt.addRenderable(new Projection(proj, graphPainter));
   belt.addRenderable(new Projection(proj, carousel));
 
-  proj.container().addEventListener("mousemove", e=>{
+  proj.container().addEventListener("mousemove", (e) => {
     const x = e.clientX;
     const y = e.clientY;
     const mouseInWorld = matrixTransform2D(
@@ -128,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const root = document.getElementById("demo");
-  root.addEventListener("click", e=>{
+  root.addEventListener("click", (e) => {
     const x = e.clientX;
     const y = e.clientY;
     const mouseInWorld = matrixTransform2D(
@@ -147,4 +145,3 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   root.appendChild(proj.container());
 });
-

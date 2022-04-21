@@ -13,7 +13,7 @@ import { PaintedNode } from "parsegraph-artist";
 import { Keystroke } from "parsegraph-input";
 import { WorldTransform } from "parsegraph-scene";
 import Method from "parsegraph-method";
-import {GraphPainter} from "parsegraph-graphpainter";
+import { GraphPainter } from "parsegraph-graphpainter";
 
 class CarouselPlot {
   node: PaintedNode;
@@ -224,22 +224,24 @@ export default class Carousel implements Projected {
       Math.pow(Math.abs(x - this._carouselCoords[0]), 2) +
         Math.pow(Math.abs(y - this._carouselCoords[1]), 2)
     );
-    const maxDist = (this._carouselSize * CAROUSEL_MAX_DISTANCE) / this.camera().scale();
-    const minDist = (this._carouselSize * CAROUSEL_MIN_DISTANCE) / this.camera().scale();
+    const maxDist =
+      (this._carouselSize * CAROUSEL_MAX_DISTANCE) / this.camera().scale();
+    const minDist =
+      (this._carouselSize * CAROUSEL_MIN_DISTANCE) / this.camera().scale();
     if (dist < minDist) {
       if (asDown) {
-         //console.log(`Down events ${dist} within the inner region ${minDist} are treated as 'cancel.'`);
+        // console.log(`Down events ${dist} within the inner region ${minDist} are treated as 'cancel.'`);
         this.hideCarousel();
         this.scheduleCarouselRepaint();
         return true;
       }
 
-      //console.log(`Up events ${dist} within the inner region ${minDist} are ignored.`);
+      // console.log(`Up events ${dist} within the inner region ${minDist} are ignored.`);
       return false;
     } else if (dist > maxDist) {
       this.hideCarousel();
       this.scheduleCarouselRepaint();
-      //console.log(`Click occurred so far outside ${dist} vs. ${maxDist} that it is considered its own event.`);
+      // console.log(`Click occurred so far outside ${dist} vs. ${maxDist} that it is considered its own event.`);
       return false;
     }
 
@@ -275,7 +277,7 @@ export default class Carousel implements Projected {
       const action = this._carouselCallbacks[i];
       action.call();
     } catch (ex) {
-      //console.log("Error occurred while running command:", ex);
+      // console.log("Error occurred while running command:", ex);
     }
     this.scheduleCarouselRepaint();
   }
@@ -311,8 +313,10 @@ export default class Carousel implements Projected {
     );
 
     if (
-      dist < (this._carouselSize * CAROUSEL_MAX_DISTANCE) / this.camera().scale() &&
-      dist > (this._carouselSize * CAROUSEL_MIN_DISTANCE) / this.camera().scale()
+      dist <
+        (this._carouselSize * CAROUSEL_MAX_DISTANCE) / this.camera().scale() &&
+      dist >
+        (this._carouselSize * CAROUSEL_MIN_DISTANCE) / this.camera().scale()
     ) {
       if (
         this._carouselPlots.length > 1 ||
@@ -463,7 +467,11 @@ export default class Carousel implements Projected {
     this.arrangeCarousel();
     let needsUpdate = false;
     this._carouselPlots.forEach((carouselData) => {
-      needsUpdate = carouselData.painter.paint(proj, timeout/this._carouselPlots.length) || needsUpdate;
+      needsUpdate =
+        carouselData.painter.paint(
+          proj,
+          timeout / this._carouselPlots.length
+        ) || needsUpdate;
     });
 
     // Paint the background highlighting fan.
@@ -522,7 +530,10 @@ export default class Carousel implements Projected {
       const graphCam = new Camera();
       graphCam.setSize(this.camera().width(), this.camera().height());
       graphCam.copy(carouselCam);
-      graphCam.adjustOrigin(this._carouselCoords[0]*graphCam.scale() + carouselData.x, this._carouselCoords[1]*graphCam.scale() + carouselData.y);
+      graphCam.adjustOrigin(
+        this._carouselCoords[0] * graphCam.scale() + carouselData.x,
+        this._carouselCoords[1] * graphCam.scale() + carouselData.y
+      );
       graphCam.setScale(1);
 
       carouselData.painter.setCamera(graphCam);
