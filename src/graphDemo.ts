@@ -10,6 +10,7 @@ import { makeInverse3x3, matrixTransform2D } from "parsegraph-matrix";
 import Color from "parsegraph-color";
 import { GraphPainter } from "parsegraph-graphpainter";
 import ActionCarousel from "./ActionCarousel";
+import { Viewport } from "parsegraph-graphpainter";
 
 const BACKGROUND_COLOR = new Color(
   0,
@@ -56,9 +57,9 @@ class BG implements Projected {
   render(proj: Projector) {
     const cam = this._camera;
     proj.render();
-    cam.setScale(2.0);
+    cam.setScale(1.0);
     cam.setSize(proj.width(), proj.height());
-    cam.setOrigin(0, 0);
+    cam.setOrigin(proj.width() / 2, proj.height() / 2);
     cam.zoomToPoint(1.0, proj.width() / 2, proj.height() / 2);
     proj.overlay().resetTransform();
     proj.overlay().clearRect(0, 0, proj.width(), proj.height());
@@ -104,44 +105,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const belt = new TimingBelt();
 
   const proj = new BasicProjector();
-  belt.addRenderable(new Projection(proj, bg));
 
   const rootBlock = palette.spawn("b");
   rootBlock.value().setLabel("Hello!");
   ac.install(rootBlock);
-  const graphPainter = new GraphPainter(rootBlock, cam);
-  belt.addRenderable(new Projection(proj, bg));
-  belt.addRenderable(new Projection(proj, graphPainter));
-  belt.addRenderable(new Projection(proj, carousel));
-
-  proj.container().addEventListener("mousemove", (e) => {
-    const x = e.clientX;
-    const y = e.clientY;
-    const mouseInWorld = matrixTransform2D(
-      makeInverse3x3(cam.worldMatrix()),
-      x,
-      y
-    );
-    carousel.mouseOverCarousel(proj, mouseInWorld[0], mouseInWorld[1]);
-  });
+  const viewport = new Viewport(rootBlock, BACKGROUND_COLOR);
+  rootBlock.value().setOnScheduleUpdate(() => viewport.scheduleUpdate());
+  belt.addRenderable(new Projection(proj, viewport));
+  // belt.addRenderable(new Projection(proj, carousel));
 
   const root = document.getElementById("demo");
-  root.addEventListener("click", (e) => {
-    const x = e.clientX;
-    const y = e.clientY;
-    const mouseInWorld = matrixTransform2D(
-      makeInverse3x3(cam.worldMatrix()),
-      x,
-      y
-    );
-    if (!carousel.isCarouselShown()) {
-      carousel.moveCarousel(mouseInWorld[0], mouseInWorld[1]);
-      carousel.showCarousel();
-      carousel.scheduleUpdate();
-      return;
-    }
-    carousel.clickCarousel(mouseInWorld[0], mouseInWorld[1], true);
-    carousel.clickCarousel(mouseInWorld[0], mouseInWorld[1], false);
-  });
   root.appendChild(proj.container());
 });

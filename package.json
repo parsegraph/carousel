@@ -64,7 +64,6 @@
     "parsegraph-method": "^1.4.22",
     "parsegraph-projector": "^1.13.1",
     "parsegraph-scene": "^2.2.3",
-    "parsegraph-toradians": "^1.4.9",
-    "parsegraph-window": "^1.8.17"
+    "parsegraph-toradians": "^1.4.9"
   }
 }
