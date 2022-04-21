@@ -89,18 +89,8 @@ class BG implements Projected {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const cam = new Camera();
-  const carousel = new Carousel(cam);
-  const bg = new BG(cam);
 
   const palette = new DefaultBlockPalette();
-
-  const ac = new ActionCarousel(carousel);
-  ["Cut", "Copy", "Paste", "Delete"].forEach((cmd) => {
-    ac.addAction(cmd, () => {
-      bg.addText(cmd);
-    });
-  });
 
   const belt = new TimingBelt();
 
@@ -108,11 +98,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const rootBlock = palette.spawn("b");
   rootBlock.value().setLabel("Hello!");
-  ac.install(rootBlock);
   const viewport = new Viewport(rootBlock, BACKGROUND_COLOR);
+  const carousel = new Carousel(viewport.camera());
+  const ac = new ActionCarousel(carousel);
+  ["Cut", "Copy", "Paste", "Delete"].forEach((cmd) => {
+    ac.addAction(cmd, () => {
+      alert(cmd);
+    });
+  });
+  ac.install(rootBlock);
+
   rootBlock.value().setOnScheduleUpdate(() => viewport.scheduleUpdate());
+
   belt.addRenderable(new Projection(proj, viewport));
-  // belt.addRenderable(new Projection(proj, carousel));
+  belt.addRenderable(new Projection(proj, carousel));
 
   const root = document.getElementById("demo");
   root.appendChild(proj.container());
