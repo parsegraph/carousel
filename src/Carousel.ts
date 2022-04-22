@@ -38,7 +38,6 @@ export default class Carousel implements Projected {
   _carouselPaintingDirty: boolean;
   _carouselPlots: CarouselPlot[];
   _carouselCallbacks: CarouselAction[];
-  _carouselCoords: number[];
   _carouselSize: number;
   _showCarousel: boolean;
   _selectedCarouselPlot: CarouselPlot;
@@ -68,7 +67,6 @@ export default class Carousel implements Projected {
     this._carouselHotkeys = {};
 
     // Location of the carousel, in world coordinates.
-    this._carouselCoords = [0, 0];
     this._carouselSize = 25;
 
     this._showCarousel = false;
@@ -89,12 +87,6 @@ export default class Carousel implements Projected {
 
   needsRepaint() {
     return this._carouselPaintingDirty || this._updateRepeatedly;
-  }
-
-  moveCarousel(worldX: number, worldY: number) {
-    this._carouselCoords[0] = worldX;
-    this._carouselCoords[1] = worldY;
-    this.scheduleCarouselRepaint();
   }
 
   setCarouselSize(size: number) {
@@ -219,8 +211,8 @@ export default class Carousel implements Projected {
     }
 
     const dist = Math.sqrt(
-      Math.pow(Math.abs(x - this._carouselCoords[0]), 2) +
-        Math.pow(Math.abs(y - this._carouselCoords[1]), 2)
+      Math.pow(Math.abs(x - this.camera().x()), 2) +
+        Math.pow(Math.abs(y - this.camera().y()), 2)
     );
     const maxDist =
       (this._carouselSize * CAROUSEL_MAX_DISTANCE) / this.camera().scale();
@@ -245,8 +237,8 @@ export default class Carousel implements Projected {
 
     const angleSpan = (2 * Math.PI) / this._carouselPlots.length;
     let mouseAngle = Math.atan2(
-      y - this._carouselCoords[1],
-      x - this._carouselCoords[0]
+      y - this.camera().y(),
+      x - this.camera().x()
     );
     // console.log(
     //   toDegrees(mouseAngle) +
@@ -304,10 +296,10 @@ export default class Carousel implements Projected {
     const angleSpan = (2 * Math.PI) / this._carouselPlots.length;
     const mouseAngle =
       Math.PI +
-      Math.atan2(y - this._carouselCoords[1], x - this._carouselCoords[0]);
+      Math.atan2(y - this.camera().y(), x - this.camera().x());
     const dist = Math.sqrt(
-      Math.pow(Math.abs(x - this._carouselCoords[0]), 2) +
-        Math.pow(Math.abs(y - this._carouselCoords[1]), 2)
+      Math.pow(Math.abs(x - this.camera().x()), 2) +
+        Math.pow(Math.abs(y - this.camera().y()), 2)
     );
 
     if (
@@ -512,7 +504,6 @@ export default class Carousel implements Projected {
     carouselCam.copy(this.camera());
     const world = matrixMultiply3x3(
       makeScale3x3(1 / carouselCam.scale()),
-      makeTranslation3x3(this._carouselCoords[0], this._carouselCoords[1]),
       carouselCam.project()
     );
     const gl = proj.glProvider().gl();
@@ -529,8 +520,8 @@ export default class Carousel implements Projected {
       graphCam.setSize(this.camera().width(), this.camera().height());
       graphCam.copy(carouselCam);
       graphCam.adjustOrigin(
-        this._carouselCoords[0] * graphCam.scale() + carouselData.x,
-        this._carouselCoords[1] * graphCam.scale() + carouselData.y
+        carouselData.x,
+        carouselData.y
       );
       graphCam.setScale(1);
 

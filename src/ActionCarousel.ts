@@ -124,7 +124,7 @@ export default class ActionCarousel {
     }
     // console.log("Creating carousel");
     carousel.clearCarousel();
-    carousel.moveCarousel(
+    carousel.camera().setOrigin(
       node.value().getLayout().absoluteX(),
       node.value().getLayout().absoluteY()
     );

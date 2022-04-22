@@ -87,7 +87,7 @@ class BG implements Projected {
 
 document.addEventListener("DOMContentLoaded", () => {
   const cam = new Camera();
-  const carousel = new Carousel(cam);
+  const carousel = new Carousel(new Camera());
   const bg = new BG(cam);
 
   const palette = new DefaultBlockPalette();
@@ -127,7 +127,13 @@ document.addEventListener("DOMContentLoaded", () => {
       y
     );
     if (!carousel.isCarouselShown()) {
-      carousel.moveCarousel(mouseInWorld[0], mouseInWorld[1]);
+      carousel.camera().setSize(
+        cam.width(), cam.height()
+      );
+      carousel.camera().setOrigin(
+        mouseInWorld[0]*cam.scale(),
+        mouseInWorld[1]*cam.scale()
+      );
       carousel.showCarousel();
       carousel.scheduleUpdate();
       return;
