@@ -107,10 +107,13 @@ document.addEventListener("DOMContentLoaded", () => {
   belt.addRenderable(new Projection(proj, carousel));
 
   proj.container().addEventListener("mousemove", (e) => {
+    if (!carousel.isCarouselShown()) {
+      return;
+    }
     const x = e.clientX;
     const y = e.clientY;
     const mouseInWorld = matrixTransform2D(
-      makeInverse3x3(cam.worldMatrix()),
+      makeInverse3x3(carousel.camera().worldMatrix()),
       x,
       y
     );
@@ -127,13 +130,13 @@ document.addEventListener("DOMContentLoaded", () => {
       y
     );
     if (!carousel.isCarouselShown()) {
-      carousel.camera().setSize(
-        cam.width(), cam.height()
-      );
-      carousel.camera().setOrigin(
-        mouseInWorld[0]*cam.scale(),
-        mouseInWorld[1]*cam.scale()
-      );
+      carousel.camera().setSize(cam.width(), cam.height());
+      carousel
+        .camera()
+        .setOrigin(
+          mouseInWorld[0] * cam.scale(),
+          mouseInWorld[1] * cam.scale()
+        );
       carousel.showCarousel();
       carousel.scheduleUpdate();
       return;

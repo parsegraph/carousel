@@ -210,14 +210,9 @@ export default class Carousel implements Projected {
       }
     }
 
-    const dist = Math.sqrt(
-      Math.pow(Math.abs(x - this.camera().x()), 2) +
-        Math.pow(Math.abs(y - this.camera().y()), 2)
-    );
-    const maxDist =
-      (this._carouselSize * CAROUSEL_MAX_DISTANCE) / this.camera().scale();
-    const minDist =
-      (this._carouselSize * CAROUSEL_MIN_DISTANCE) / this.camera().scale();
+    const dist = Math.sqrt(Math.pow(Math.abs(x), 2) + Math.pow(Math.abs(y), 2));
+    const maxDist = this._carouselSize * CAROUSEL_MAX_DISTANCE;
+    const minDist = this._carouselSize * CAROUSEL_MIN_DISTANCE;
     if (dist < minDist) {
       if (asDown) {
         // console.log(`Down events ${dist} within the inner region ${minDist} are treated as 'cancel.'`);
@@ -236,10 +231,7 @@ export default class Carousel implements Projected {
     }
 
     const angleSpan = (2 * Math.PI) / this._carouselPlots.length;
-    let mouseAngle = Math.atan2(
-      y - this.camera().y(),
-      x - this.camera().x()
-    );
+    let mouseAngle = Math.atan2(y, x);
     // console.log(
     //   toDegrees(mouseAngle) +
     //   " degrees = caret " +
@@ -294,19 +286,12 @@ export default class Carousel implements Projected {
     }
 
     const angleSpan = (2 * Math.PI) / this._carouselPlots.length;
-    const mouseAngle =
-      Math.PI +
-      Math.atan2(y - this.camera().y(), x - this.camera().x());
-    const dist = Math.sqrt(
-      Math.pow(Math.abs(x - this.camera().x()), 2) +
-        Math.pow(Math.abs(y - this.camera().y()), 2)
-    );
+    const mouseAngle = Math.PI + Math.atan2(y, x);
+    const dist = Math.sqrt(Math.pow(Math.abs(x), 2) + Math.pow(Math.abs(y), 2));
 
     if (
-      dist <
-        (this._carouselSize * CAROUSEL_MAX_DISTANCE) / this.camera().scale() &&
-      dist >
-        (this._carouselSize * CAROUSEL_MIN_DISTANCE) / this.camera().scale()
+      dist < this._carouselSize * CAROUSEL_MAX_DISTANCE &&
+      dist > this._carouselSize * CAROUSEL_MIN_DISTANCE
     ) {
       if (
         this._carouselPlots.length > 1 ||
@@ -519,10 +504,7 @@ export default class Carousel implements Projected {
       const graphCam = new Camera();
       graphCam.setSize(this.camera().width(), this.camera().height());
       graphCam.copy(carouselCam);
-      graphCam.adjustOrigin(
-        carouselData.x,
-        carouselData.y
-      );
+      graphCam.adjustOrigin(carouselData.x, carouselData.y);
       graphCam.setScale(1);
 
       carouselData.painter.setCamera(graphCam);
