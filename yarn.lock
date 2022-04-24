@@ -4840,7 +4840,27 @@ parse5@6.0.1:
   resolved "https://registry.yarnpkg.com/parse5/-/parse5-6.0.1.tgz#e1a1c085c569b3dc08321184f19a39cc27f7c30b"
   integrity sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==
 
-parsegraph-artist@^3.4.0, parsegraph-artist@^3.4.3:
+parsegraph-artist@^3.4.0, parsegraph-artist@^3.4.5:
+  version "3.4.5"
+  resolved "https://registry.yarnpkg.com/parsegraph-artist/-/parsegraph-artist-3.4.5.tgz#0676c2005876340097b77d85e5a93fd061df0db3"
+  integrity sha512-PBVYXKyRAiOtD/5poVZ3rTME80sW3tf79TaYUc9gL4+PEfWdX7aB5lxWkTmo0LD/aCAxgv7tgcRzdKyJ0PjY5w==
+  dependencies:
+    parsegraph-camera "^1.4.13"
+    parsegraph-color "^1.4.7"
+    parsegraph-compileprogram "^2.2.10"
+    parsegraph-direction "^2.1.0"
+    parsegraph-interact "^1.6.6"
+    parsegraph-layout "^1.13.2"
+    parsegraph-matrix "^1.4.11"
+    parsegraph-method "^1.4.22"
+    parsegraph-projector "^1.13.2"
+    parsegraph-scene "^2.2.5"
+    parsegraph-showincamera "^1.7.1"
+    parsegraph-size "^1.7.0"
+    parsegraph-timing "^1.4.16"
+    parsegraph-timingbelt "^1.7.11"
+
+parsegraph-artist@^3.4.3:
   version "3.4.3"
   resolved "https://registry.yarnpkg.com/parsegraph-artist/-/parsegraph-artist-3.4.3.tgz#77ba7cc94dfbb2eaf24ea2c7bd148e4d5bf7c690"
   integrity sha512-ZUds9CuE+6puDs5MII5ANIwRLZIN6EqN2A9dJ4YxfXSSrKx+A0ZEwghEwXJcGnE1h6Q461+qLLWC/kHVkiLK1g==
@@ -4917,6 +4937,16 @@ parsegraph-color@^1.4.7:
   version "1.4.7"
   resolved "https://registry.yarnpkg.com/parsegraph-color/-/parsegraph-color-1.4.7.tgz#8aa69bd3c93fa8bcc36f6783893716bd752fba87"
   integrity sha512-ZlinbOlbnDDV9F/cHITmUSyZRCjegoTnsWey0CaZx6w0jEFlB9yQCMo6xBgFHcYBdd3DFf9rWisECc5nedsCXA==
+
+parsegraph-compileprogram@^2.2.10:
+  version "2.2.10"
+  resolved "https://registry.yarnpkg.com/parsegraph-compileprogram/-/parsegraph-compileprogram-2.2.10.tgz#115ef20be5025b9e082bd0d50bba539e9f8ae079"
+  integrity sha512-6R13qSKf7yh+VHWKg8cEQlok47NOT5x1Z7Kihd9iFT1b8qMPnazvqywvmr98sPUqa+FKXZ1GYlNeCN2Gv4sOsg==
+  dependencies:
+    parsegraph-color "^1.4.7"
+    parsegraph-method "^1.4.22"
+    parsegraph-rect "^1.4.7"
+    parsegraph-shader "^1.5.6"
 
 parsegraph-compileprogram@^2.2.9:
   version "2.2.9"
