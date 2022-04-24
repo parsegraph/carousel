@@ -4903,7 +4903,21 @@ parsegraph-block@^4.3.0, parsegraph-block@^4.3.3:
     parsegraph-timing "^1.4.16"
     parsegraph-timingbelt "^1.7.11"
 
-parsegraph-blockpainter@^1.6.6, parsegraph-blockpainter@^1.6.8:
+parsegraph-blockpainter@^1.6.6:
+  version "1.6.10"
+  resolved "https://registry.yarnpkg.com/parsegraph-blockpainter/-/parsegraph-blockpainter-1.6.10.tgz#fcbe5419439bc5f96c7d35bf440278cace0e17e9"
+  integrity sha512-vtvDXvjauXM/eJWi7o8To2MXusI0elZ9Nnr2eW7wW8ys36MedLgkzDFmCIEkv0NDO87rFPjf+CKAgI3DIxzlzg==
+  dependencies:
+    glslify-loader "^2.0.0"
+    node-canvas-webgl "^0.2.6"
+    parsegraph-color "^1.4.7"
+    parsegraph-compileprogram "^2.2.10"
+    parsegraph-matrix "^1.4.11"
+    parsegraph-rect "^1.4.7"
+    ts-shader-loader "^1.0.6"
+    webgl-mock "^0.1.7"
+
+parsegraph-blockpainter@^1.6.8:
   version "1.6.9"
   resolved "https://registry.yarnpkg.com/parsegraph-blockpainter/-/parsegraph-blockpainter-1.6.9.tgz#33a57169bb9292ef79d54b50c82f14a11b154e46"
   integrity sha512-s/8Y9WFvZatHG2CeiJJBXCAnDgwOaa3odxW391f/e7l8icdKi/uHYIOYN5Yap6HdUIIcvgswsxE0PzjLInAxmQ==
@@ -4929,6 +4943,14 @@ parsegraph-camera@^1.4.13:
   version "1.4.13"
   resolved "https://registry.yarnpkg.com/parsegraph-camera/-/parsegraph-camera-1.4.13.tgz#04cfb22ef9ba9439eb058261db4c4c165ce7afa7"
   integrity sha512-IjA4CAmyiOVTkkCNTlbQ+7mRXAW70axAuC6iUxXWVDj1HVfyFJr4N9PSiALm6lu/lpqcsGlyt9O754SKCLE3aw==
+  dependencies:
+    parsegraph-matrix "^1.4.11"
+    parsegraph-rect "^1.4.7"
+
+parsegraph-camera@^1.4.14:
+  version "1.4.14"
+  resolved "https://registry.yarnpkg.com/parsegraph-camera/-/parsegraph-camera-1.4.14.tgz#a04d5bc378606641a61726babf972a1eb0094675"
+  integrity sha512-RfFWF8HICZrItLD23eaJPGXiNiFsXBeEftMohfPka7cdDkvsQKK1o7cLbvJ/j0YpuFot2BIwyNNNmI01PQhM0g==
   dependencies:
     parsegraph-matrix "^1.4.11"
     parsegraph-rect "^1.4.7"

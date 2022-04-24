@@ -55,7 +55,7 @@
   "dependencies": {
     "parsegraph-artist": "^3.4.5",
     "parsegraph-block": "^4.3.3",
-    "parsegraph-camera": "^1.4.13",
+    "parsegraph-camera": "^1.4.14",
     "parsegraph-color": "^1.4.7",
     "parsegraph-fanpainter": "^1.6.8",
     "parsegraph-graphpainter": "^2.4.0",
