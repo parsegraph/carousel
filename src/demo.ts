@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
       x,
       y
     );
-    carousel.mouseOverCarousel(proj, mouseInWorld[0], mouseInWorld[1]);
+    carousel.mouseOverCarousel(mouseInWorld[0], mouseInWorld[1]);
   });
 
   const root = document.getElementById("demo");
