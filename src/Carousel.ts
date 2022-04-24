@@ -1,8 +1,5 @@
 import FanPainter from "parsegraph-fanpainter";
-import {
-  matrixMultiply3x3,
-  makeScale3x3,
-} from "parsegraph-matrix";
+import { matrixMultiply3x3, makeScale3x3 } from "parsegraph-matrix";
 import Color from "parsegraph-color";
 import { Projector, Projected } from "parsegraph-projector";
 import CarouselAction from "./CarouselAction";
@@ -12,7 +9,7 @@ import { Keystroke } from "parsegraph-input";
 import Method from "parsegraph-method";
 import { GraphPainter } from "parsegraph-graphpainter";
 
-class CarouselPlot {
+export class CarouselPlot {
   node: PaintedNode;
   x: number;
   y: number;
@@ -30,8 +27,8 @@ export const CAROUSEL_MAX_DISTANCE = 4.0;
 export const CAROUSEL_MIN_DISTANCE = 0.5;
 
 export default class Carousel implements Projected {
-  _selectionAngle:number;
-  _angleSpan:number;
+  _selectionAngle: number;
+  _angleSpan: number;
   _updateRepeatedly: boolean;
   _showScale: number;
   onScheduleRepaint: Function;
@@ -71,8 +68,6 @@ export default class Carousel implements Projected {
     this._carouselSize = 25;
 
     this._showCarousel = false;
-    this._selectedCarouselPlot = null;
-    this._selectedCarouselPlotIndex = null;
 
     // GL painters are not created until needed.
     this._fanPainters = new Map();
@@ -81,8 +76,7 @@ export default class Carousel implements Projected {
 
     this._update = new Method();
 
-    this._selectionAngle = NaN;
-    this._angleSpan = NaN;
+    this.reset();
   }
 
   camera() {
@@ -277,12 +271,16 @@ export default class Carousel implements Projected {
     return true;
   }
 
+  private reset() {
+    this._selectionAngle = null;
+    this._angleSpan = null;
+    this._selectedCarouselPlot = null;
+    this._selectedCarouselPlotIndex = null;
+  }
+
   mouseOverCarousel(x: number, y: number) {
     if (!this.isCarouselShown()) {
-      this._selectionAngle = NaN;
-      this._angleSpan = NaN;
-      this._selectedCarouselPlot = null;
-      this._selectedCarouselPlotIndex = null;
+      this.reset();
       return 0;
     }
 
@@ -317,10 +315,7 @@ export default class Carousel implements Projected {
         return 2;
       }
     }
-    this._selectionAngle = NaN;
-    this._angleSpan = NaN;
-    this._selectedCarouselPlot = null;
-    this._selectedCarouselPlotIndex = null;
+    this.reset();
     this.scheduleCarouselRepaint();
     return 0;
   }
