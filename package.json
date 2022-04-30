@@ -1,6 +1,6 @@
 {
   "name": "parsegraph-carousel",
-  "version": "2.3.18",
+  "version": "2.3.19",
   "description": "carousel",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
