@@ -49,21 +49,20 @@
   },
   "peerDependencies": {
     "parsegraph-checkglerror": "^1.5.3",
-    "parsegraph-log": "^1.7.3",
-    "webgl-debug": "^2.0.1"
+    "parsegraph-log": "^1.7.3"
   },
   "dependencies": {
-    "parsegraph-artist": "^3.4.5",
-    "parsegraph-block": "^4.3.3",
-    "parsegraph-camera": "^1.4.14",
+    "parsegraph-artist": "^3.4.11",
+    "parsegraph-block": "^4.4.3",
+    "parsegraph-camera": "^1.4.17",
     "parsegraph-color": "^1.4.7",
-    "parsegraph-fanpainter": "^1.6.8",
-    "parsegraph-graphpainter": "^2.4.0",
-    "parsegraph-input": "^1.6.5",
-    "parsegraph-matrix": "^1.4.11",
+    "parsegraph-fanpainter": "^1.6.11",
+    "parsegraph-graphpainter": "^2.4.7",
+    "parsegraph-input": "^2.0.3",
+    "parsegraph-matrix": "^1.4.12",
     "parsegraph-method": "^1.4.22",
-    "parsegraph-projector": "^1.13.2",
-    "parsegraph-scene": "^2.2.3",
+    "parsegraph-projector": "^1.13.5",
+    "parsegraph-scene": "^2.2.9",
     "parsegraph-timing": "^1.4.16",
     "parsegraph-timingbelt": "^1.7.11",
     "parsegraph-toradians": "^1.4.9"
