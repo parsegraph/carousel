@@ -4005,7 +4005,7 @@ parsegraph-artist@^3.4.11:
     parsegraph-timing "^1.4.16"
     parsegraph-timingbelt "^1.7.11"
 
-parsegraph-block@^4.4.3:
+parsegraph-block@^4.4.3, parsegraph-block@^4.4.4:
   version "4.4.4"
   resolved "https://registry.yarnpkg.com/parsegraph-block/-/parsegraph-block-4.4.4.tgz#051ad70140f57cdbe668bdb3548870038db9e308"
   integrity sha512-pRWsJjN+ZHlHBedvbvULkVyTLgW2daf9t9tcng2I2oD++RzS64XQ9cOZ9N80jXwEKWrd2O4As9vaKdDGvqf2tw==
