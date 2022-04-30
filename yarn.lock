@@ -3812,27 +3812,7 @@ parse5@6.0.1:
   resolved "https://registry.yarnpkg.com/parse5/-/parse5-6.0.1.tgz#e1a1c085c569b3dc08321184f19a39cc27f7c30b"
   integrity sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==
 
-parsegraph-artist@^3.4.21:
-  version "3.4.21"
-  resolved "https://registry.yarnpkg.com/parsegraph-artist/-/parsegraph-artist-3.4.21.tgz#11eab3f69c38816d84a5efff7971cd248b1ba576"
-  integrity sha512-+QOYCKbyDunZl3a4TDySu/qeuPYWwRPLFe/9WL6gZyRcZXLmD3vKF/499WyeoLGiPC3U8XQx8Nm1sRRhOsFB7w==
-  dependencies:
-    parsegraph-camera "^1.4.18"
-    parsegraph-color "^1.4.7"
-    parsegraph-compileprogram "^2.2.15"
-    parsegraph-direction "^2.1.0"
-    parsegraph-interact "^1.6.9"
-    parsegraph-layout "^1.13.6"
-    parsegraph-matrix "^1.4.12"
-    parsegraph-method "^1.4.22"
-    parsegraph-projector "^1.14.0"
-    parsegraph-scene "^2.2.22"
-    parsegraph-showincamera "^1.7.4"
-    parsegraph-size "^1.7.1"
-    parsegraph-timing "^1.4.16"
-    parsegraph-timingbelt "^1.7.11"
-
-parsegraph-artist@^3.4.22:
+parsegraph-artist@^3.4.21, parsegraph-artist@^3.4.22:
   version "3.4.22"
   resolved "https://registry.yarnpkg.com/parsegraph-artist/-/parsegraph-artist-3.4.22.tgz#2389a736c1d72cb90556e53b2921d41a54fa7c24"
   integrity sha512-HOu6uHyTDx9k+bdhvYvAAxdqmzqGBEWIOdvWjvnTytsY+XMY2fo4TKw/YKaNVazJvmwcZnRtE/JtsWgVOtSoTA==
@@ -3852,12 +3832,12 @@ parsegraph-artist@^3.4.22:
     parsegraph-timing "^1.4.16"
     parsegraph-timingbelt "^1.7.11"
 
-parsegraph-block@^4.4.11, parsegraph-block@^4.4.14:
-  version "4.4.14"
-  resolved "https://registry.yarnpkg.com/parsegraph-block/-/parsegraph-block-4.4.14.tgz#d7bd24de02d81bb12dda2601bbbe18440bce3f89"
-  integrity sha512-5aE4htXKdVwpzhajGX9Q8OtJmpUvyOgUcOe3Xbwog0M3xoJtyWFOeyGI9xUYsh3l1f0cfSThS2FvZZIS70ajYA==
+parsegraph-block@^4.4.11, parsegraph-block@^4.4.15:
+  version "4.4.15"
+  resolved "https://registry.yarnpkg.com/parsegraph-block/-/parsegraph-block-4.4.15.tgz#1a1244fbd4c502d7ced36096e18b91956c6a65b0"
+  integrity sha512-caw2TVGHc11yk2DdYcSN+Hsv6KAwFNHuLOLihWdxlciMiLvTIlPBgfkrYjRScSPWDN3ZyNODVoIaSWF7p4cwdA==
   dependencies:
-    parsegraph-artist "^3.4.21"
+    parsegraph-artist "^3.4.22"
     parsegraph-blockpainter "^1.7.1"
     parsegraph-camera "^1.4.18"
     parsegraph-color "^1.4.7"
