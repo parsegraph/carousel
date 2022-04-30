@@ -14,5 +14,5 @@ export {
   CAROUSEL_MIN_DISTANCE,
   CAROUSEL_MAX_DISTANCE,
   CarouselAction,
-  CarouselPlot
+  CarouselPlot,
 };
