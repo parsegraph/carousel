@@ -3914,10 +3914,10 @@ parsegraph-artist@^3.4.26:
     parsegraph-timing "^1.4.16"
     parsegraph-timingbelt "^1.7.11"
 
-parsegraph-block@^4.4.18:
-  version "4.4.18"
-  resolved "https://registry.yarnpkg.com/parsegraph-block/-/parsegraph-block-4.4.18.tgz#51ab399c155cf8f7a44bf539e6abf43ff12f1403"
-  integrity sha512-QzbANaRfbDNCm/M8vP51HcawkMBwjnYb+/tX6bpK3dEtYnrY/RD4TBuvf2RIg929aI5+t3z4U6/DHjGADmNbvQ==
+parsegraph-block@^4.4.19:
+  version "4.4.19"
+  resolved "https://registry.yarnpkg.com/parsegraph-block/-/parsegraph-block-4.4.19.tgz#afdf666115292b9176f4bb8ea9b3fb9ab10db096"
+  integrity sha512-GXILdlhxecJ3ZEuYo2id4AN0Y+8ik7yAZT2RFZDHMMTijzcKeo7KefHzCa9uxV31C4tygcn9el99aGdM3YNwZQ==
   dependencies:
     parsegraph-artist "^3.4.26"
     parsegraph-blockpainter "^1.7.1"
@@ -4014,13 +4014,13 @@ parsegraph-gettimeinmillis@^1.4.6:
   resolved "https://registry.yarnpkg.com/parsegraph-gettimeinmillis/-/parsegraph-gettimeinmillis-1.4.6.tgz#edb341bf5b2faaaf918e8c0ba31f63d643afe942"
   integrity sha512-ARG/HOV6rb8R8U6tLgJ5l8IYL21DoKIki7Ktrm4+kckKyLBLBLGFY0HH5fzzcIue9bhbjI5Kj0pUCGazSIUj5w==
 
-parsegraph-graphpainter@^2.5.8:
-  version "2.5.8"
-  resolved "https://registry.yarnpkg.com/parsegraph-graphpainter/-/parsegraph-graphpainter-2.5.8.tgz#059dcaab3882515732d31f60b198bcc7da80606a"
-  integrity sha512-YLYSH1zo/Q2ziuXND2lVBKrOu0rMzoKBvdf26VTLdUPGspAmPNNDw4rOpU9Wk8gGupLQmow5zXUn0DeOqEjDgg==
+parsegraph-graphpainter@^2.5.9:
+  version "2.5.9"
+  resolved "https://registry.yarnpkg.com/parsegraph-graphpainter/-/parsegraph-graphpainter-2.5.9.tgz#3285b611c2bc2bb8040521f55a294e723fb7b988"
+  integrity sha512-8j4eftxnhVV05DRXUj5257RFHdmhiTCLd+XkFQnzUR5P0ezeCJl63/PhgQE3hcX49CtLoqisTZYxrdukRnB7Hw==
   dependencies:
     parsegraph-artist "^3.4.26"
-    parsegraph-block "^4.4.18"
+    parsegraph-block "^4.4.19"
     parsegraph-blockpainter "^1.7.1"
     parsegraph-camera "^1.4.18"
     parsegraph-color "^1.4.7"
