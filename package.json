@@ -1,6 +1,6 @@
 {
   "name": "parsegraph-carousel",
-  "version": "2.3.32",
+  "version": "2.3.33",
   "description": "carousel",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -54,6 +54,6 @@
   },
   "dependencies": {
     "parsegraph-fanpainter": "^1.6.13",
-    "parsegraph-graphpainter": "^2.5.11"
+    "parsegraph-graphpainter": "^2.5.12"
   }
 }
