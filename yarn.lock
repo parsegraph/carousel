@@ -4001,10 +4001,10 @@ parsegraph-gettimeinmillis@^1.4.6:
   resolved "https://registry.yarnpkg.com/parsegraph-gettimeinmillis/-/parsegraph-gettimeinmillis-1.4.6.tgz#edb341bf5b2faaaf918e8c0ba31f63d643afe942"
   integrity sha512-ARG/HOV6rb8R8U6tLgJ5l8IYL21DoKIki7Ktrm4+kckKyLBLBLGFY0HH5fzzcIue9bhbjI5Kj0pUCGazSIUj5w==
 
-parsegraph-graphpainter@^2.5.14:
-  version "2.5.14"
-  resolved "https://registry.yarnpkg.com/parsegraph-graphpainter/-/parsegraph-graphpainter-2.5.14.tgz#dd08ed88fe46983f0701cf3b5ce7d0e208e94a42"
-  integrity sha512-yOxjM0z/O2BmsXkXvjI4KdVUn3iGM0FFyixPhr2RObIARVxjZG8asJs1w74Zqs+dgHEE8kEifrp2tmlUlLL4zQ==
+parsegraph-graphpainter@^2.5.15:
+  version "2.5.15"
+  resolved "https://registry.yarnpkg.com/parsegraph-graphpainter/-/parsegraph-graphpainter-2.5.15.tgz#aece99a25642c13bc63b6595083e4a2e2f29a628"
+  integrity sha512-jR0ZwAGNKJDH0/2yGLfgT3VYzWvt/Q13AaLEpD9xRLIHX+0LeHn5fCtEz3coEgz8GxDLCmSKJuqUOdwc/SfNRA==
   dependencies:
     parsegraph-block "^4.4.26"
 
