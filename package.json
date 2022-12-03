@@ -54,6 +54,6 @@
   },
   "dependencies": {
     "parsegraph-fanpainter": "^1.6.13",
-    "parsegraph-graphpainter": "^2.5.13"
+    "parsegraph-graphpainter": "^2.5.14"
   }
 }
